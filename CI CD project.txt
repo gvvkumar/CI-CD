@@ -1,0 +1,48 @@
+1) Introduction:
+	Developers writing the code and pushed into the git repository,
+whenever code is available in git jenkins pull the code and do the build,
+once build is completed it generates artifacts. Artifact should depoly in Docker container or Kubernetes cluster. 
+To deploy target environment ansible is came into the picture to deploy the application
+
+2) Setup ci-cd with jenkins,git, maven and tomcat
+	setup jenkins
+	run a test job
+	setup & configure maven and git
+	set tomcat server
+	install plugins
+	integrate git maven in jenkins job
+	run ci cd job
+		git github jekins ec2(artifactory)
+
+	Docker:
+	setting up docker environment
+	managing docker with ansible
+	docker hub repository
+	docker file
+	run job
+
+	Integration with ansible:
+	setting up ansible environment
+	intgrating ansible with jenkins
+	writing a ansible playbook to deploy on container
+	run job
+		git github jekins ansible docker
+
+	Kubernes:
+	setting up kubernetes environment
+	writing deployment and service files
+	run a job
+		git github jekins ansible docker Kubernetess
+
+3) What is CI & CD
+	CI: Developers push the code into souce code management systems, once code is available in scm, then Jenkins could identify code and pull the code automatically and run build and unit test at the end of successfull continous integration process, we will get artifacts. 
+	Deploying these artifacts in target environement(staging-run integration test, load test, performance test, funtional) we call it as a Continuous delivery, if build is stable then going to deploy in production environment with manual manner
+	whereas continous deployment build is going deploy from staging to production environment as automatic manner is called contious deployment
+
+4) Resources to setup simple CI/CD Pipeline:
+	github.com/yankils
+	
+5)	clone below github repo
+	github.com/yankils/hello-world
+ 	github.com/yankils/Simple-Devops-Project
+
