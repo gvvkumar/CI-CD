@@ -47,7 +47,7 @@ To deploy target environment ansible is came into the picture to deploy the appl
 	github.com/yankils/hello-world
  	github.com/yankils/Simple-Devops-Project
 
-Section-II
+Section-II (CI-CD Pipeline using Git, Jenkins and Maven)
 6)	Jenkins Installation:
  	 git		      Jenkins			   ec2-instance
       	continous build		       War file deployment	
@@ -69,7 +69,7 @@ Section-II
  	PATH=$PATH:$HOME/bin:$JAVA_HOME
 	 echo $JAVA_HOME (check path-logout & login)
  
-	Install Jenkins
+	Install Jenkins:
 	You can install jenkins using the rpm or by setting up the repo. We will set up the repo so that we can update it easily in the future.
 
 	Get the latest version of jenkins from https://pkg.jenkins.io/redhat-stable/ and install
@@ -130,9 +130,52 @@ Section-II
 
 	Manage Jenkins > Global Tool Configuration > git
 
+9) Setup-Maven:
+	Install & configure Maven build tool on Jenkins:
+	Maven is a code build tool which used to convert your code to an artifact. this is a widely used plugin to build in continuous integration
 
+	Prerequisites
+	Jenkins server
+	Install Maven on Jenkins
+	Download maven packages https://maven.apache.org/download.cgi onto Jenkins server. In this case, I am using /opt/maven as my installation directory
+	Link : https://maven.apache.org/download.cgi
+	 # Creating maven directory under /opt
+	 mkdir /opt/maven
+	 cd /opt/maven
+	 # downloading maven version 3.6.0
+	 wget http://mirrors.estointernet.in/apache/maven/maven-3/3.6.1/binaries/apache-maven-3.6.1-bin.tar.gz
+	 tar -xvzf apache-maven-3.6.1-bin.tar.gz
+	Setup M2_HOME and M2 paths in .bash_profile of the user and add these to the path variable
+	M2_HOME=/opt/maven/apache-maven-3.6.1
+	M2=$M2_HOME/bin
+	PATH=<Existing_PATH>:$M2_HOME:$M2
+	Checkpoint
+	logoff and login to check maven version
 
+	mvn --version
+	So far we have completed the installation of maven software to support maven plugin on the jenkins console. Let's jump onto Jenkins to complete the remaining 		steps.
+	
+	Setup maven on Jenkins console
+	Install maven plugin without restart
+	Manage Jenkins > Jenkins Plugins > available > Maven Invoker
+	Manage Jenkins > Jenkins Plugins > available > Maven Integration
+	Configure maven path
+	Manage Jenkins > Global Tool Configuration > Maven-->Name: M2_HOME / MAVEN_HOME	: /opt/maven
 
+10) Create first maven Job:
+	Create a First Maven Jenkins job to build hello-world project
+	Jenkins Job name: My_First_Maven_Build
+	We know how to use work with each and Git, Jenkins independently. What if you want to collaborate these two? that is where Simple DevOps project helps you. 	Follow the below steps if you are a new guy to DevOps. You love it.
 
-
- 
+	Pre-requisites
+	Jenkins server
+	Steps to create "My_First_Maven_Build" Jenkin job
+	Login to Jenkins console
+	Create Jenkins job, Fill the following details,
+	Source Code Management:
+	Repository: https://github.com/yankils/hello-world.git
+	Branches to build : */master
+	Build:
+	Root POM:pom.xml
+	Goals and options: clean install package
+	(u can see target directory under workspace, it has war file, these files available in cd /var/lib/jenkins/workspace)
