@@ -183,7 +183,7 @@ Section-II (CI-CD Pipeline using Git, Jenkins and Maven)
 
 
 Section-III (Integrating tomcat server in CI-CD Pipeline)
-*********************************************************
+***********************************************
 11) Tomcat server setup:
 	Tomcat installation on EC2 instance
 	Pre-requisites
@@ -200,8 +200,8 @@ Section-III (Integrating tomcat server in CI-CD Pipeline)
 	shutdown.sh
 	create link files for tomcat startup.sh and shutdown.sh
 
-	ln -s /opt/apache-tomcat-8.5.35/bin/startup.sh /usr/local/bin/tomcatup
-	ln -s /opt/apache-tomcat-8.5.35/bin/shutdown.sh /usr/local/bin/tomcatdown
+	ln -s /opt/apache-tomcat-8.5.53/bin/startup.sh /usr/local/bin/tomcatup
+	ln -s /opt/apache-tomcat-8.5.53/bin/shutdown.sh /usr/local/bin/tomcatdown
 	tomcatup
 	Check point :
 	access tomcat application from browser on port 8080
@@ -209,7 +209,7 @@ Section-III (Integrating tomcat server in CI-CD Pipeline)
 	http://<Public_IP>:8080
 	Using unique ports for each application is a best practice in an environment. But tomcat and Jenkins runs on ports number 8080. Hence lets change tomcat port 	number to 8090. Change port number in conf/server.xml file under tomcat home
 
-	cd /opt/apache-tomcat-8.5.35/conf
+	cd /opt/apache-tomcat-8.5.53/conf
 	# update port number in the "connecter port" field in server.xml
 	# restart tomcat after configuration update
 	tomcatdown
@@ -218,10 +218,11 @@ Section-III (Integrating tomcat server in CI-CD Pipeline)
 	Access tomcat application from browser on port 8090
 
 	http://<Public_IP>:8090
-	now application is accessible on port 8090. but tomcat application doesnt allow to login from browser. changing a default parameter in context.xml does address 	this issue
+	now application is accessible on port 8090. but tomcat application doesnt allow to login from browser. changing a default parameter in context.xml does address this issue
 	#search for context.xml
 	find / -name context.xml
-	above command gives 3 context.xml files. comment () Value ClassName field on files which are under webapp directory. After that restart tomcat services to 	effect these changes (/opt/tomcat/webapps/META-INF/context.xml,/opt/tomcat/webapps/host-manager/META-INF/context.xml) 
+	above command gives 3 context.xml files. comment () Valve ClassName field on files which are under webapp directory. After that restart tomcat services to 
+	effect these changes (/opt/tomcat/webapps/META-INF/context.xml,/opt/tomcat/webapps/host-manager/META-INF/context.xml) 
 	
 	tomcatdown
 	tomcatup
@@ -237,7 +238,33 @@ Section-III (Integrating tomcat server in CI-CD Pipeline)
 
 12) Deploy WAR file on Tomcat vm using jenkins:
 	
-	Git-->GitHub-->Jenkins-->Tomcat
+	Git-->GitHub-->Jenkins-->Tomcat	(war/ear : **/*.war & tomcat URL)
 			(war file deployment)
-	
 
+13) Deploy VM through poll scm:
+	Build triggers : Poll /scM: * * * * * (run the job) 
+
+
+Section-IV (Integrating Docker in ci-cd pipeline
+****************************************
+	git hub --> Jenkins---> Docker
+14) Docker setup:
+	Pre-requisites:
+	Amazon Linux EC2 Instance
+	Installation Steps
+	Install docker and start docker services
+	yum install docker -y
+	docker --version 
+
+	# start docker services
+	service docker start
+	service docker status
+	Create a user called dockeradmin
+	useradd dockeradmin
+	passwd dockeradmin
+	add a user to docker group to manage docker
+	usermod -aG docker dockeradmin
+	Validation test
+	Create a tomcat docker container by pulling a docker image from the public docker registry
+	docker run -d --name test-tomcat-server -p 8090:8080 tomcat:latest
+	
