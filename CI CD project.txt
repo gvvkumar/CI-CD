@@ -241,14 +241,14 @@ Section-III (Integrating tomcat server in CI-CD Pipeline)
 	Git-->GitHub-->Jenkins-->Tomcat	(war/ear : **/*.war & tomcat URL)
 			(war file deployment)
 
-13) Deploy VM through poll scm:
+15) Deploy VM through poll scm:
 	Build triggers : Poll /scM: * * * * * (run the job) 
 
 
 Section-IV (Integrating Docker in ci-cd pipeline
 ****************************************
 	git hub --> Jenkins---> Docker
-14) Docker setup:
+16) Docker setup:
 	Pre-requisites:
 	Amazon Linux EC2 Instance
 	Installation Steps
@@ -267,4 +267,21 @@ Section-IV (Integrating Docker in ci-cd pipeline
 	Validation test
 	Create a tomcat docker container by pulling a docker image from the public docker registry
 	docker run -d --name test-tomcat-server -p 8090:8080 tomcat:latest
+	
+
+17) Latest tomcat docker issue: webapps.dist --> files copied to webapps
+
+18) Integrating docker with jenkins:
+	for integration install "publish over ssh" plugin in jenkins (Send build artifacts over SSH)
+	
+	add dockeradmin in jenkins
+	jenkins-> configure system -> publish over ssh
+	
+	SSH Server Name : docker-host
+	Hostname	: private ip of docker host
+	Username	: dockeradmin
+	Passphrase / Password	:
+	
+	enable password based authentication on docker-host ->vi /etc/ssh/sshd_config : PasswordAuthentication yes
+	restart sshd service: service sshd reload
 	
