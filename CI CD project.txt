@@ -246,7 +246,7 @@ Section-III (Integrating tomcat server in CI-CD Pipeline)
 
 
 Section-IV (Integrating Docker in ci-cd pipeline
-****************************************
+************************************************
 	git hub --> Jenkins---> Docker
 16) Docker setup:
 	Pre-requisites:
@@ -284,4 +284,19 @@ Section-IV (Integrating Docker in ci-cd pipeline
 	
 	enable password based authentication on docker-host ->vi /etc/ssh/sshd_config : PasswordAuthentication yes
 	restart sshd service: service sshd reload
+	
+
+20) create docker file and build & run tomcat container with webpp.war
+    vi Dockerfile
+	FROM tomcat:latest
+
+	COPY ./webapp.war /usr/local/tomcat/webapps
+	:wq
+    docker build -t docker-container-war .
+    docker run -d --name docker-project-war -p 8080:8080 docker-container-war
+    check web access --> <docker-host: public ip :8080>/webapp
+    
+ 
+ 21)
+  
 	
