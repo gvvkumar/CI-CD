@@ -307,7 +307,7 @@ above jenkins job:
     check web access --> <docker-host: public ip :8080>/webapp
     
  21) deploy war file on docker container using jenkins:
- 	delete .war file in docker host & runing containers
+ 	delete .war file in docker host, running containers and keep Dockerfile
 	same as (19)
 	post build actions -->
 		send build artifact over ssh -->
