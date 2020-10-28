@@ -296,7 +296,7 @@ above jenkins job:
 		 --save..apply (.war file copied to docker-host home directory)
 	
 
-20) create docker file and build & run tomcat container with webpp.war
+20) create docker file: and build & run tomcat container with webpp.war :
     vi Dockerfile
 	FROM tomcat:latest
 
@@ -306,7 +306,17 @@ above jenkins job:
     docker run -d --name docker-project-war -p 8080:8080 docker-container-war
     check web access --> <docker-host: public ip :8080>/webapp
     
- 
- 21)
+ 21) deploy war file on docker container using jenkins:
+ 	delete .war file in docker host & runing containers
+	same as (19)
+	post build actions -->
+		send build artifact over ssh -->
+			ssh server name: docker-host
+			transfer set: webapp/target/*.war
+			remove prefix: webapp/target
+			remote directory: .
+			exec command: cd /home/dockeradmin; docker build -t devops-image .; docker run -d --name devops-container -p 8080:8080 devops-image
+			save , apply, run : build now
+	
   
 	
