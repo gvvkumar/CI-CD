@@ -285,6 +285,16 @@ Section-IV (Integrating Docker in ci-cd pipeline
 	enable password based authentication on docker-host ->vi /etc/ssh/sshd_config : PasswordAuthentication yes
 	restart sshd service: service sshd reload
 	
+19)  copy artifacts to docker host: 
+above jenkins job:
+	post build actions -->
+		send build artifact over ssh -->
+			ssh server name: docker-host
+			transfer set: webapp/target/*.war
+			remove prefix: webapp/target
+			remote directory: .
+		 --save..apply (.war file copied to docker-host home directory)
+	
 
 20) create docker file and build & run tomcat container with webpp.war
     vi Dockerfile
