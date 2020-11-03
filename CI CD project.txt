@@ -427,5 +427,7 @@ Transfers > Transfer set
 Source files: webapp/target/*.war
 Remove prefix: webapp/target
 Remote directory: //opt//docker ( on ansible_server: cd /opt  -> sudo mkdir docker  -> sudo chown -R ansadmin:ansadmin /opt/docker )
-Save and run the job now.
+Save and run the job now. (copy war into ansible-host)
+
+
 
