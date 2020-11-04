@@ -449,7 +449,7 @@ Create create-docker-image.yml under /opt/docker on Ansible server:
 
   tasks:
   
-  (before creating and starting container delete existing container & images)
+  ( (29) before creating and starting container delete existing container & images)
   - name: stop current running container
     command: docker stop simple-devops-container
     ignore_errors: yes
@@ -471,3 +471,8 @@ Create create-docker-image.yml under /opt/docker on Ansible server:
 
 run: ansible-playbook -i hosts docker-image.yml  --check
 ansible-playbook -i hosts docker-image.yml
+
+30) dockerhub integration with ansible;
+	use docker login command in ansible host and prompt to ask username & password
+
+31)
