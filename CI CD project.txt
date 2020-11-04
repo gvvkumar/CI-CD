@@ -448,6 +448,20 @@ Create create-docker-image.yml under /opt/docker on Ansible server:
   become: true 
 
   tasks:
+  
+  (before creating and starting container delete existing container & images)
+  - name: stop current running container
+    command: docker stop simple-devops-container
+    ignore_errors: yes
+
+  - name: remove stopped container
+    command: docker rm simple-devops-container
+    ignore_errors: yes
+
+  - name: remove docker image
+    command: docker rmi simple-devops-image
+    ignore_errors: yes
+  
   - name: building docker image
     command: docker build -t simple-devops-image .
     args:
