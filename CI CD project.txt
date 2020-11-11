@@ -475,4 +475,51 @@ ansible-playbook -i hosts docker-image.yml
 30) dockerhub integration with ansible;
 	use docker login command in ansible host and prompt to ask username & password
 
-31)
+31) tagging docker images using ansible:
+     1) cat create-docker-image-tag.yml : this file create image and push into the docker hub and delete image in ansible host
+    ---
+- hosts: all
+  become: true 
+  tasks:
+    - name: create docker images using war file
+      command: docker build -t simple-devops-image .
+      args:
+        chdir: /opt/docker
+    
+    - name: create tag to image
+      command: docker tag simple-devops-image 798918735/simple-devops-image      
+
+    - name: push image on to dockerhub
+      command: docker push 798918735/simple-devops-image
+
+    - name: remove docker images from ansible-host
+      command: docker rmi simple-devops-image 798918735/simple-devops-image
+      ignore_errors: yes
+      
+      2) cat docker-image.yml : this file pulled the image from dockerhub and run the image
+---
+- hosts: all
+  become: true
+  tasks:
+    - name: stop current running container
+      command: docker stop simple-devops-container
+      ignore_errors: yes
+
+    - name: remove stopped container
+      command: docker rm simple-devops-container
+      ignore_errors: yes
+
+    - name: remove docker image
+      command: docker rmi 798918735/simple-devops-image
+      ignore_errors: yes
+
+    - name: pull docker image from dockerhub
+      command: docker pull 798918735/simple-devops-image
+      
+    - name: creating docker image using docker command
+      command: docker run -d --name simple-devops-container -p 8080:8080 798918735/simple-devops-image
+      
+      3) edit host file for add docker-host ip
+      
+   
+      
